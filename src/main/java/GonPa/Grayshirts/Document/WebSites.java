@@ -69,6 +69,8 @@ public class WebSites implements Serializable {
         return labels;
     }
 
+    public WebSites(){}
+
     public WebSites(String domain, String leadCount, String plan, String ownerId, List<String> labels) {
         this.domain = domain;
         this.leadCount = leadCount;
@@ -79,7 +81,7 @@ public class WebSites implements Serializable {
 
     public Map<String, Object> getDto(boolean lead){
         Map<String, Object> webSitesDto = new LinkedHashMap<>();
-        webSitesDto.put("id", this.getId());
+        //webSitesDto.put("id", this.getId());
         webSitesDto.put("domain", this.getDomain());
         webSitesDto.put("ownerId", this.getOwnerId());
         webSitesDto.put("plan", this.getPlan());
