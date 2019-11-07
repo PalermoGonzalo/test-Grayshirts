@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,11 +21,11 @@ public class GrayshirtsController {
     private WebSitesRepository webSites;
 
     @RequestMapping(path = "/websites/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> getWebSites(@PathVariable("id") long id, @RequestHeader("token") String token){
+    public ResponseEntity<Map<String, Object>> getWebSites(@PathVariable("id") int id, @RequestHeader("token") String token){
         Map<String, Object> response = new HashMap<>();
         if(token.equals("123456789")) {
-            //WebSites webSitesFound = WebSitesRepository.findById(id).orElse(null);
-            //response = webSitesFound.getDto(true);
+            WebSites webSite = webSites.findAll().get(id - 1);
+            response.put("", webSite);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
         }
         response.put("status", "401");
@@ -38,6 +39,7 @@ public class GrayshirtsController {
         if(token.equals("123456789")){
             WebSites newWebSite = webSites.save(webSiteDetails);
             response = newWebSite.getDto(false);
+            response.put("id", webSites.count());
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
         }
         response.put("status", "401");
