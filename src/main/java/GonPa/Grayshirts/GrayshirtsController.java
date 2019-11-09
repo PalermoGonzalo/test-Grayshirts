@@ -23,27 +23,19 @@ public class GrayshirtsController {
     @RequestMapping(path = "/websites/{id}", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getWebSites(@PathVariable("id") int id, @RequestHeader("token") String token){
         Map<String, Object> response = new HashMap<>();
-        if(token.equals("123456789")) {
-            WebSites webSite = webSites.findAll().get(id - 1);
-            response.put("", webSite);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-        }
-        response.put("status", "401");
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.UNAUTHORIZED);
+        WebSites webSite = webSites.findAll().get(id - 1);
+        response.put("", webSite);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/websites", method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus
     public ResponseEntity<Map<String, Object>> Status(@RequestBody WebSites webSiteDetails, @RequestHeader("token") String token){
         Map<String, Object> response = new HashMap<>();
-        if(token.equals("123456789")){
-            WebSites newWebSite = webSites.save(webSiteDetails);
-            response = newWebSite.getDto(false);
-            response.put("id", webSites.count());
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-        }
-        response.put("status", "401");
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.UNAUTHORIZED);
+        WebSites newWebSite = webSites.save(webSiteDetails);
+        response = newWebSite.getDto(false);
+        response.put("id", webSites.count());
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
 }
