@@ -24,7 +24,8 @@ public class GrayshirtsController {
     public ResponseEntity<Map<String, Object>> getWebSites(@PathVariable("id") int id, @RequestHeader("token") String token){
         Map<String, Object> response = new HashMap<>();
         WebSites webSite = webSites.findAll().get(id - 1);
-        response = webSite.getDto(false);
+        response = webSite.getDto(true);
+        response.put("id", id);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
